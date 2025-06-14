@@ -3,8 +3,11 @@ import { db, storage } from './config/firebase';
 import { collection,doc,setDoc, getDocs, query, where, runTransaction} from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 import { Timestamp } from 'firebase/firestore';
+import { useNavigate } from "react-router-dom";
+
 
 function AdmissionForm() {
+  const navigate = useNavigate();
   const [files, setFiles] = useState({});
   const [status, setStatus] = useState('');
   const [formData, setFormData] = useState({
@@ -200,6 +203,9 @@ function AdmissionForm() {
     
     try {
       const studentId = await generateStudentId(formData.Course, formData.Session);
+      const candidateName = formData.candidateName.trim();
+      const Course=formData.Course;
+      const Session=formData.Session;
       setStatus('Submitting...');
 
       const numericFields = [
@@ -233,6 +239,7 @@ function AdmissionForm() {
 
       setStatus('Submitted successfully!');
       console.log('Form submitted successfully');
+      navigate("/success", {state: { studentId, candidateName, Course, Session }});
     } catch (error) {
       console.error(error);
       setStatus('Submission failed.');
@@ -824,7 +831,7 @@ function AdmissionForm() {
           <input
             type="text"
             name="Remarks"
-            value={formData.remarks}
+            value={formData.Remarks}
             pattern="[A-Za-z\s]+"
             title="Only letters and spaces allowed"
             onInput={(e) => {
