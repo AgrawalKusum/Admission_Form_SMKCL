@@ -226,7 +226,7 @@ function AdmissionForm() {
       const finalData = {
         ...cleanedData,
         studentId,
-        ...fileUrls,
+        fileUrls,
         submittedAt: new Date()};
 
       await setDoc(doc(db, "students", studentId), finalData);
