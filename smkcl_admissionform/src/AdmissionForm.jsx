@@ -1,117 +1,24 @@
-import React, { useState } from 'react';
-import { db, storage } from './config/firebase';
-import { collection,doc,setDoc, getDocs, query, where, runTransaction} from 'firebase/firestore';
-import { ref, uploadBytes } from 'firebase/storage';
-import { Timestamp } from 'firebase/firestore';
-import { useNavigate } from "react-router-dom";
-
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
+import { useFormContext } from "./FormContext";
+import { folderNameMap, fileSizeLimits} from './utils';
 
 function AdmissionForm() {
+  const { formData, setFormData, files, setFiles } = useFormContext();
   const navigate = useNavigate();
-  const [files, setFiles] = useState({});
+  const location = useLocation();
   const [status, setStatus] = useState('');
-  const [formData, setFormData] = useState({
-    Caste :"",
-    Category : "",
-    Course : "",
-    DOB : "",
-    District : "",
-    Gender : "",
-    PINcode : "",
-    Religion : "",
-    Session : "2025-26",
-    State : "",
-    aadharNo : "",
-    address : "",
-    candidateMobile1: "",
-    candidateMobile2: "",
-    candidateName: "",
-    city: "",
-    course1: "10th",
-    course2: "12th",
-    course3: "",
-    course4: "",
-    course5: "",
-    email_Id: "",
-    fatherName: "",
-    finalYearMarksheet_Sr_No1: "",
-    finalYearMarksheet_Sr_No2: "",
-    finalYearMarksheet_Sr_No3: "",
-    finalYearMarksheet_Sr_No4: "",
-    finalYearMarksheet_Sr_No5: "",
-    marksObtained1: "",
-    marksObtained2: "",
-    marksObtained3: "",
-    marksObtained4: "",
-    marksObtained5: "",
-    maxMarks1: "",
-    maxMarks2: "",
-    maxMarks3: "",
-    maxMarks4: "",
-    maxMarks5: "",
-    mediumOfStudy: "",
-    motherName: "",
-    parentMobile: "",
-    percentage1: "",
-    percentage2: "",
-    percentage3: "",
-    percentage4: "",
-    percentage5: "",
-    remarks: "",
-    stateOfDomicile: "",
-    subjects1: "",
-    subjects2: "",
-    subjects3: "",
-    subjects4: "",
-    subjects5: "",
-    university1: "",
-    university2: "",
-    university3: "",
-    university4: "",
-    university5: "",
-    yearOfPassing1: "",
-    yearOfPassing2: "",
-    yearOfPassing3: "",
-    yearOfPassing4: "",
-    yearOfPassing5: "",
-  });
 
-  const folderNameMap = {
-  1: '10th',
-  2: '12th',
-  3: 'UG',
-  4: 'PG',
-  5: 'Other',
-  6: 'photo',
-  7: 'signature',
-  8: 'casteCertificate'
-};
-  const fileSizeLimits = {
-  1: 0.1,
-  2: 0.1,
-  3: 0.1,
-  4: 0.1,
-  5: 0.1,
-  6: 0.05,
-  7: 0.05,
-  8: 0.1
-};
-  const uploadFileToFirebase = async (file, folderName, studentId, candidateName) => {
-    if (!file || !folderName || !studentId || !candidateName) {
-      throw new Error("Missing required parameters");
+  
+
+  useEffect(() => {
+    if (location.state?.formData) { 
+      setFormData(location.state.formData);
     }
-
-    const ext = file.name.split('.').pop();
-    const cleanName = candidateName.trim().replace(/\s+/g, '_'); // avoid spaces in file name
-
-    const filename = `${studentId}_${cleanName}_${folderName}.${ext}`;
-    const storagePath = `${folderName}/${filename}`;
-    const storageRef = ref(storage, storagePath);
-
-    await uploadBytes(storageRef, file);
-
-    return storagePath;
-  };
+    if (location.state?.files) {
+      setFiles(location.state.files);
+    }
+  }, [location.state]);
 
   const handleFileChange = (e, row) => {
     const file = e.target.files[0];
@@ -124,27 +31,9 @@ function AdmissionForm() {
         e.target.value = '';
         return;
       }
-    setFiles((prev) => ({ ...prev, [row]: file }));
+    setFiles((prev) => ({ ...prev, [folderNameMap[row]]: file }));
   };
   }
-  const uploadAllfiles = async (studentId) => {
-    const uploadResults = {};
-
-    for (let i = 1; i <= 8; i++) {
-      if (files[i]) {
-        const folderKey = folderNameMap[i];
-        const filePath = await uploadFileToFirebase(
-          files[i],
-          folderKey,
-          studentId,
-          formData.candidateName
-        );
-        uploadResults[`file_${folderKey}`] = filePath;
-      }
-    }
-
-    return uploadResults;
-  };
 
   const handleChange=(e)=>{
     const { name, value } = e.target;
@@ -171,88 +60,21 @@ function AdmissionForm() {
       console.error("Error updating form data:", err);
     }
   };
-  const generateStudentId =async (Course, Session) => {
-    const prefix = Course.trim().slice(0, 1).toUpperCase();
-    const year = Session.slice(2, 4);
 
-    const baseId = `${prefix}${year}`;
+  const handlePreview = (e) =>{
+    e.preventDefault();
+    setFormData(formData);
+    setFiles(files);
+    console.log("Files before navigating to preview:", files);
 
-    const counterRef=doc(db, 'counters', baseId);
-    try{
-      const newId=await runTransaction(db,async (transaction)=>{
-        const counterDoc=await transaction.get(counterRef);
-
-        let count =1;
-        if(counterDoc.exists()){
-          count = counterDoc.data().count+1;
-        }
-        transaction.set(counterRef, {count},{merge:true});
-        const padded=count.toString().padStart(3,"0");
-        return `${baseId}${padded}`;
-      });
-      return newId;
-    }catch(e){
-      console.error("Transaction failed", e);
-      throw new Error("Failed to generate student ID");
-    }
-  };
-
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();    
-    
-    try {
-      const studentId = await generateStudentId(formData.Course, formData.Session);
-      const candidateName = formData.candidateName.trim();
-      const Course=formData.Course;
-      const Session=formData.Session;
-      setStatus('Submitting...');
-
-      const numericFields = [
-        'aadharNo', 'PINcode',
-        'candidateMobile1', 'candidateMobile2', 'parentMobile',
-        'marksObtained1', 'marksObtained2', 'marksObtained3', 'marksObtained4', 'marksObtained5',
-        'maxMarks1', 'maxMarks2', 'maxMarks3', 'maxMarks4', 'maxMarks5',
-        'percentage1', 'percentage2', 'percentage3', 'percentage4', 'percentage5',
-        'yearOfPassing1', 'yearOfPassing2', 'yearOfPassing3', 'yearOfPassing4', 'yearOfPassing5',
-      ];
-
-      const cleanedData = { ...formData };
-      numericFields.forEach(field => {
-        if (cleanedData[field] !== '') {
-          cleanedData[field] = Number(cleanedData[field]);
-        }
-      });
-      if (cleanedData.DOB) {
-        cleanedData.DOB = Timestamp.fromDate(new Date(cleanedData.DOB));
-      }
-
-      const fileUrls = await uploadAllfiles(studentId);
-
-      const finalData = {
-        ...cleanedData,
-        studentId,
-        fileUrls,
-        submittedAt: new Date()};
-
-      await setDoc(doc(db, "students", studentId), finalData);
-
-      setStatus('Submitted successfully!');
-      console.log('Form submitted successfully');
-      navigate("/success", {state: { studentId, candidateName, Course, Session }});
-    } catch (error) {
-      console.error(error);
-      setStatus('Submission failed.');
-    }
-  };
-
-  
+    navigate("/preview", { state: { formData, files} });
+  }
 
   return (
     <div>
       <h1>SMT. MOHAN KAUR COLLEGE OF LAW</h1>
       <h2><u>Admission Form</u></h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handlePreview}>
 
         <div className="section">
           <div className="row">
@@ -386,6 +208,23 @@ function AdmissionForm() {
                   e.target.value = e.target.value.replace(/\D/g, '');
                 }}
                 required
+              />
+            </div>
+            <div>
+              <label htmlFor="apaarId">APAAR ID / ABC ID:</label>
+              <input
+                type="text"
+                name="apaarId"
+                placeholder="APAAR ID / ABC ID"
+                value={formData.apaarId}
+                onChange={handleChange}
+                pattern="\d{12}"
+                maxLength={12}
+                title="Enter your 12-digit APAAR ID number"
+                inputMode="numeric"
+                onInput={(e) => {
+                  e.target.value = e.target.value.replace(/\D/g, '');
+                }}
               />
             </div>
             <div>
@@ -664,7 +503,6 @@ function AdmissionForm() {
             </div>
           </div>
         </div>
-
          
 
         <div className="section">
@@ -788,6 +626,7 @@ function AdmissionForm() {
           <div className="row">
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Photo:<span style={{ color: 'red' }}>*</span></label>
+              <small>Max size: 50 KB</small>
               <input
                 type="file"
                 name="photo"
@@ -796,11 +635,11 @@ function AdmissionForm() {
                 required
                 onChange={(e) => handleFileChange(e, 6)}
               />
-              <small>Max size: 50 KB</small>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Signature:<span style={{ color: 'red' }}>*</span></label>
+              <small>Max size: 50 KB</small>
               <input
                 type="file"
                 name="signature"
@@ -809,11 +648,11 @@ function AdmissionForm() {
                 required
                 onChange={(e) => handleFileChange(e, 7)}
               />
-              <small>Max size: 50 KB</small>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Caste Certificate:</label>
+              <small>Max size: 100 KB</small>
               <input
                 type="file"
                 name="casteCertificate"
@@ -821,7 +660,6 @@ function AdmissionForm() {
                 title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
                 onChange={(e) => handleFileChange(e, 8)}
               />
-              <small>Max size: 100 KB</small>
             </div>
           </div>
         </div>
@@ -840,7 +678,7 @@ function AdmissionForm() {
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit">Go to Preview</button>
       </form>
     </div>
   );
