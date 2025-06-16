@@ -44,6 +44,8 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  overflow-x: auto;
+  display: block;
 }
 
 th,
@@ -56,10 +58,12 @@ td {
 .row {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap; /* Make rows wrap on smaller screens */
 }
 
 .row > div {
   flex: 1;
+  min-width: 250px; /* Prevent items from becoming too narrow */
 }
 
 .photo-upload {
@@ -74,6 +78,7 @@ td {
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
   margin-bottom: 10px;
 }
 
@@ -84,8 +89,7 @@ td {
   font-weight: normal;
 }
 
-.feild{
-
+.feild {
   width: 100%;
   padding: 8px;
   margin-bottom: 12px;
@@ -94,12 +98,50 @@ td {
   border-radius: 6px;
   background-color: #f9f9f9;
 }
+
 .image-preview {
-  width: 150px;
+  width: 100%;
+  max-width: 150px;
   height: auto;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 8px;
   object-fit: contain;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* -------------------
+   Responsive Tweaks
+-------------------- */
+@media (max-width: 768px) {
+  form {
+    padding: 16px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .photo-upload {
+    text-align: left;
+    margin-top: 12px;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  h1, h2 {
+    font-size: 1.4rem;
+  }
+
+  input, select, textarea {
+    font-size: 1rem;
+  }
+
+  .feild {
+    font-size: 1rem;
+  }
 }
