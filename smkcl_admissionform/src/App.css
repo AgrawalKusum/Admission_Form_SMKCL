@@ -36,8 +36,26 @@ input,
 select,
 textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
   box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+input:focus,
+input:hover,
+select:focus,
+select:hover,
+textarea:focus,
+textarea:hover {
+  border-color: #660202;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  outline: none;
 }
 
 table {
@@ -91,13 +109,24 @@ td {
 
 .feild {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f9f9f9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
+
+.feild:focus,
+.feild:hover {
+  border-color: #660202;
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  outline: none;
+}
+
 
 .image-preview {
   width: 100%;

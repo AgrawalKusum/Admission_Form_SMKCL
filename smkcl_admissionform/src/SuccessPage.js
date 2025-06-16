@@ -9,7 +9,7 @@ const SuccessPage = () => {
     <div className="success-page">
         <form>
             <h2>Submission Successful!</h2>
-            <p> Candidate Name: <strong>{candidateName}</strong></p>
+            <p>Candidate Name: <strong>{candidateName}</strong></p>
             <p>Course: <strong>{Course}</strong></p>
             <p>Session: <strong>{Session}</strong></p>
             <p>Your Student ID is <strong>{studentId}</strong></p>

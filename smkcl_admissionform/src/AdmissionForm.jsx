@@ -72,7 +72,7 @@ function AdmissionForm() {
 
   return (
     <div>
-      <h1>SMT. MOHAN KAUR COLLEGE OF LAW</h1>
+      <h1>Smt. Mohan Kaur College Of Law</h1>
       <h2><u>Admission Form</u></h2>
       <form onSubmit={handlePreview}>
 
