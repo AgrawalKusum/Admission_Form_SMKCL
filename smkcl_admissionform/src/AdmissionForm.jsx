@@ -14,9 +14,12 @@ function AdmissionForm() {
   useEffect(() => {
     if (location.state?.formData) { 
       setFormData(location.state.formData);
-    }
-    if (location.state?.files) {
-      setFiles(location.state.files);
+      localStorage.setItem("formData", JSON.stringify(location.state.formData));
+    }else{
+      const saveData=localStorage.getItem("formData");
+      if(saveData){
+        setFormData(JSON.parse(saveData))
+      }
     }
   }, [location.state]);
 

@@ -15,6 +15,9 @@ const PreviewPage = () => {
 
 
     useEffect(() => {
+        if(formData){
+          localStorage.setItem("formData",JSON.stringify(formData));
+        }
         if (!formData || !files) {
         navigate("/", { replace: true });
         }
@@ -31,7 +34,7 @@ const PreviewPage = () => {
     }
 
   const handleEdit = () => {
-    navigate("/", { state: { formData, files } });
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
@@ -76,6 +79,8 @@ const PreviewPage = () => {
       setStatus('Submitted successfully!');
       console.log('Form submitted successfully');
       navigate("/success", {state: { studentId, candidateName, Course, Session }});
+      localStorage.removeItem("formData");
+
     } catch (error) {
       console.error(error);
       setStatus('Submission failed.');
