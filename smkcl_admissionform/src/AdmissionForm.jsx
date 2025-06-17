@@ -52,8 +52,13 @@ function AdmissionForm() {
           const marks = parseFloat(updated[marksKey]);
           const max = parseFloat(updated[maxKey]);
 
-          if (!isNaN(marks) && !isNaN(max) && max > 0) {
-            updated[percentKey] = ((marks / max) * 100).toFixed(2);
+          if (!isNaN(marks) && !isNaN(max)) {
+            if (max < marks) {
+              updated[maxKey + "_error"] = true;
+            } else {
+              updated[maxKey + "_error"] = false;
+              updated[percentKey] = ((marks / max) * 100).toFixed(0);
+            }
           }
         }
 
@@ -589,7 +594,11 @@ function AdmissionForm() {
                         value={formData[`maxMarks${i}`]}
                         onChange={handleChange}
                         required={isRequired}
+                        className={formData[`maxMarks${i}_error`] ? 'invalid' : ''}
                       />
+                      {formData[`maxMarks${i}_error`] && (
+                        <small className="error-text">Max Marks must be ≥ Marks Obtained</small>
+                      )}
                     </td>
                     <td>
                       <input

@@ -255,8 +255,10 @@ const PreviewPage = () => {
                 </div>
             </div>
             </div>
+      <div className="button-row">
         <button onClick={handleEdit}>Edit</button>
-      <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
       </form>
     </div>
   );

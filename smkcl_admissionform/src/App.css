@@ -9,8 +9,8 @@ form {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  border: 4px solid #a16e10;
+  border-radius: 1px;
 }
 
 h1 {
@@ -52,14 +52,47 @@ select:focus,
 select:hover,
 textarea:focus,
 textarea:hover {
-  border-color: #660202;
+  border-color: #d3b171;
   background-color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   outline: none;
 }
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+button {
+  background-color: #be8e34;
+  color: white;
+  padding: 8px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: #b66305;
+  transform: translateY(-1px);
+}
+
+button:active {
+  background-color: #633102;
+  transform: translateY(0);
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 
 table {
   width: 100%;
+  border: 2px solid #d3b171;
   border-collapse: collapse;
   margin-top: 10px;
   overflow-x: auto;
@@ -76,12 +109,12 @@ td {
 .row {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap; /* Make rows wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
 .row > div {
   flex: 1;
-  min-width: 250px; /* Prevent items from becoming too narrow */
+  min-width: 250px;
 }
 
 .photo-upload {
@@ -121,7 +154,7 @@ td {
 
 .feild:focus,
 .feild:hover {
-  border-color: #660202;
+  border-color: #d3b171;
   background-color: #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   outline: none;
@@ -139,9 +172,8 @@ td {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* -------------------
-   Responsive Tweaks
--------------------- */
+
+
 @media (max-width: 768px) {
   form {
     padding: 16px;
