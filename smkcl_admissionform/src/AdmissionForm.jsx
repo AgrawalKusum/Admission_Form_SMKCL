@@ -26,11 +26,11 @@ function AdmissionForm() {
   const handleFileChange = (e, row) => {
     const file = e.target.files[0];
     if (file) {
-      const maxSizeMB = fileSizeLimits[row];
-      const maxSizeBytes = maxSizeMB * 1024 * 1024;
+      const maxSizeKB = fileSizeLimits[row];
+      const maxSizeBytes = maxSizeKB * 1024;
 
       if (file.size > maxSizeBytes) {
-        alert(`File is too large. Maximum allowed is ${maxSizeMB} MB.`);
+        alert(`File is too large. Maximum allowed is ${maxSizeKB} KB.`);
         e.target.value = '';
         return;
       }
@@ -40,9 +40,13 @@ function AdmissionForm() {
 
   const handleChange=(e)=>{
     const { name, value } = e.target;
+    const fieldsToCapitalize = ['candidateName', 'fatherName', 'motherName', 'address', 'city', 'State', 'District', 'Religion', 'Caste', 'Category', 'stateOfDomicile', 'mediumOfStudy', 'subjects1', 'subjects2', 'subjects3', 'subjects4', 'subjects5', 'course3', 'course4', 'course5','university1', 'university2', 'university3', 'university4', 'university5'];
+    const newValue = fieldsToCapitalize.includes(name)
+      ? value.toUpperCase()
+      : value;
     try{
       setFormData((prev) => {
-        const updated = { ...prev, [name]: value };
+        const updated = { ...prev, [name]: newValue };
 
         for (let i = 1; i <= 5; i++) {
           const marksKey = `marksObtained${i}`;
@@ -210,7 +214,7 @@ function AdmissionForm() {
                 onChange={handleChange}
                 pattern="\d{12}"
                 maxLength={12}
-                title="Enter your 12-digit AADHAR number"
+                title="Enter your 12-digit APAAR ID number"
                 inputMode="numeric"
                 onInput={(e) => {
                   e.target.value = e.target.value.replace(/\D/g, '');
@@ -223,7 +227,7 @@ function AdmissionForm() {
               <input
                 type="text"
                 name="apaarId"
-                placeholder="APAAR ID / ABC ID"
+                placeholder="Enter your 12-digit APAAR ID number"
                 value={formData.apaarId}
                 onChange={handleChange}
                 pattern="\d{12}"
@@ -526,7 +530,7 @@ function AdmissionForm() {
                 <th>Marks Obtained</th>
                 <th>Maximum Marks</th>
                 <th>Percentage</th>
-                <th>Final Year Marksheet Sr. No.</th>
+                <th>Final Year Marksheet Serial. No.</th>
                 <th>Upload Marksheet <small style={{ color: 'gray' }}>Max size: 100KB. Allowed: .jpg, .jpeg, .png</small></th>
               </tr>
             </thead>

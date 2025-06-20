@@ -14,14 +14,14 @@ import { ref, uploadBytes } from 'firebase/storage';
 };
 
 export const fileSizeLimits = {
-  1: 0.1,
-  2: 0.1,
-  3: 0.1,
-  4: 0.1,
-  5: 0.1,
-  6: 0.05,
-  7: 0.05,
-  8: 0.1
+  1: 100,
+  2: 100,
+  3: 100,
+  4: 100,
+  5: 100,
+  6: 50,
+  7: 50,
+  8: 100
 };
 
   export const uploadFileToFirebase = async (file, folderName, studentId, candidateName) => {
