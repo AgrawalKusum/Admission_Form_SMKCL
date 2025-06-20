@@ -7,6 +7,7 @@ import { useFormContext } from "./FormContext";
 
 
 const PreviewPage = () => {
+    const [isConfirmed, setIsConfirmed] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const { formData,files} = useFormContext();
@@ -241,7 +242,7 @@ const PreviewPage = () => {
 
                 <div>
                 <label>District:</label>
-               <div className="feild">{formData.District}</div>
+                <div className="feild">{formData.District}</div>
                 </div>
 
                 <div>
@@ -249,18 +250,29 @@ const PreviewPage = () => {
                 <div className="feild">{formData.State}</div>
                 </div>
 
-                <div>
+              <div>
                 <label>PIN Code:</label>
                 <div className="feild">{formData.PINcode}</div>
-                </div>
+              </div>
             </div>
             </div>
+            <div>
+              <label style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "20px" }}>
+                <input
+                  type="checkbox"
+                  checked={isConfirmed}
+                  onChange={(e) => setIsConfirmed(e.target.checked)}
+                />
+                I hereby confirm that the information provided herein is accurate, correct and complete and that the documents submitted along with this application form are genuine.
+              </label>
+            </div>
+
       <div className="button-row">
         <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit} disabled={!isConfirmed}>Submit</button>
       </div>
-      </form>
-    </div>
+    </form>
+  </div>
   );
 };
 

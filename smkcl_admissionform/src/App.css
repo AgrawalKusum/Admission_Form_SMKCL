@@ -32,7 +32,7 @@ label {
   margin: 8px 0 4px;
 }
 
-input,
+input:not([type="checkbox"]),
 select,
 textarea {
   width: 100%;
@@ -40,7 +40,7 @@ textarea {
   margin-bottom: 16px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 4px;
   background-color: #f9f9f9;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -146,8 +146,8 @@ td {
   margin-bottom: 16px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+  border-radius: 6px;
+  background-color: #ffffff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }

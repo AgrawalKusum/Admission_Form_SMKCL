@@ -31,9 +31,9 @@ export const fileSizeLimits = {
 
     const ext = file.name.split('.').pop();
     const cleanName = candidateName.trim().replace(/\s+/g, '_'); // avoid spaces in file name
-
+    const baseFolder = `${studentId}_${cleanName}`;
     const filename = `${studentId}_${cleanName}_${folderName}.${ext}`;
-    const storagePath = `${folderName}/${filename}`;
+    const storagePath = `${baseFolder}/${filename}`;
     const storageRef = ref(storage, storagePath);
 
     await uploadBytes(storageRef, file);
