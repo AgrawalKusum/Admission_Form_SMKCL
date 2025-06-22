@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useFormContext } from "./FormContext";
+import { collection,getDocs, query, where} from 'firebase/firestore';
+import { db } from './config/firebase';
 import { folderNameMap, fileSizeLimits} from './utils';
 
 function AdmissionForm() {
@@ -101,7 +103,7 @@ function AdmissionForm() {
     }
     const isDuplicate = await checkDuplicateEntry(aadharNo, DOB);
     if (isDuplicate) {
-      alert("You have already submitted this form.");
+      alert("A record with these details already exists. A duplicate record cannot be created");
       return;
     }
     console.log("Files before navigating to preview:", files);
@@ -112,7 +114,8 @@ function AdmissionForm() {
   return (
     <div>
       <h1>Smt. Mohan Kaur College Of Law</h1>
-      <h2><u>Admission Form</u></h2>
+      <h4>Affiliated to CCS University, Meerut (NAAC A++) & Bar Council of India</h4>
+      <h2><b><u>Admission Form</u></b></h2>
       <form onSubmit={handlePreview}>
 
         <div className="section">
@@ -563,7 +566,7 @@ function AdmissionForm() {
             </thead>
             <tbody>
               {[1, 2, 3, 4, 5].map((i) => {
-                const isRequired = i=== 1 || i === 2;
+                const isRequired = (i=== 1 || i === 2 || (i===3 && formData.Course==='LLB'));
                 return (
                   <tr key={i}>
                     <td>{i}</td>
@@ -699,6 +702,17 @@ function AdmissionForm() {
               <input
                 type="file"
                 name="casteCertificate"
+                accept="image/*"
+                title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
+                onChange={(e) => handleFileChange(e, 8)}
+              />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
+              <label>Upload Aadhar Card:</label>
+              <small>Max size: 100 KB</small>
+              <input
+                type="file"
+                name="aadharCard"
                 accept="image/*"
                 title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
                 onChange={(e) => handleFileChange(e, 8)}

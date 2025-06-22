@@ -16,11 +16,15 @@ form {
 h1 {
   text-align: center;
   color: #660202;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Bookman Old Style', Times, serif;
+  font-size: 2.4rem;
+  margin-bottom: 2px;
 }
 
-h2 {
+h2, h4{
+  margin-top: 0px;
   text-align: center;
+  font-weight: bold;
 }
 
 .section {

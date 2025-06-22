@@ -1,5 +1,5 @@
 import { db, storage } from './config/firebase';
-import { collection,doc,setDoc, getDocs, query, where, runTransaction} from 'firebase/firestore';
+import { doc,runTransaction} from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 
  export const folderNameMap = {
@@ -10,7 +10,8 @@ import { ref, uploadBytes } from 'firebase/storage';
   5: 'Other',
   6: 'photo',
   7: 'signature',
-  8: 'casteCertificate'
+  8: 'casteCertificate',
+  9: 'aadharCard',
 };
 
 export const fileSizeLimits = {
@@ -21,7 +22,8 @@ export const fileSizeLimits = {
   5: 100,
   6: 50,
   7: 50,
-  8: 100
+  8: 100,
+  9: 100
 };
 
   export const uploadFileToFirebase = async (file, folderName, studentId, candidateName) => {

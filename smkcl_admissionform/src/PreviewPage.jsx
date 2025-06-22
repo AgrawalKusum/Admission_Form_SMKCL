@@ -268,7 +268,7 @@ const PreviewPage = () => {
                   checked={isConfirmed}
                   onChange={(e) => setIsConfirmed(e.target.checked)}
                 />
-                I hereby confirm that the information provided herein is accurate, correct and complete and that the documents submitted along with this application form are genuine.
+                I hereby confirm that the information provided herein by me is accurate, correct and complete and that the documents submitted along with this application form are genuine.
               </label>
             </div>
 
