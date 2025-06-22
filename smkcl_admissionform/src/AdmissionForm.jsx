@@ -73,10 +73,37 @@ function AdmissionForm() {
     }
   };
 
-  const handlePreview = (e) =>{
+  const checkDuplicateEntry = async (aadharNo, dob) => {
+    try {
+      const q = query(
+        collection(db, "students"),
+        where("aadharNo", "==", Number(aadharNo)),
+        where("DOB", "==", new Date(dob))
+      );
+      const snapshot = await getDocs(q);
+      return !snapshot.empty;
+    } catch (error) {
+      console.error("Error checking for duplicate:", error);
+      return false;
+    }
+  };
+
+
+  const handlePreview = async (e) =>{
     e.preventDefault();
     setFormData(formData);
     setFiles(files);
+
+    const { aadharNo, DOB } = formData;
+    if (!aadharNo || !DOB) {
+      alert("Please fill in Aadhar Number and Date of Birth.");
+      return;
+    }
+    const isDuplicate = await checkDuplicateEntry(aadharNo, DOB);
+    if (isDuplicate) {
+      alert("You have already submitted this form.");
+      return;
+    }
     console.log("Files before navigating to preview:", files);
 
     navigate("/preview", { state: { formData, files} });

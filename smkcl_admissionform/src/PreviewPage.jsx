@@ -12,6 +12,8 @@ const PreviewPage = () => {
     const navigate = useNavigate();
     const { formData,files} = useFormContext();
     const [status, setStatus] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     console.log("PreviewPage received files:", files);
 
 
@@ -39,7 +41,10 @@ const PreviewPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setStatus('Submitting...');  
     
     try {
       const studentId = await generateStudentId(formData.Course, formData.Session);
@@ -269,7 +274,7 @@ const PreviewPage = () => {
 
       <div className="button-row">
         <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleSubmit} disabled={!isConfirmed}>Submit</button>
+        <button onClick={handleSubmit} disabled={!isConfirmed || isSubmitting}>Submit</button>
       </div>
     </form>
   </div>
