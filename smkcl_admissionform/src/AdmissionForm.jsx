@@ -10,8 +10,7 @@ function AdmissionForm() {
   const navigate = useNavigate();
   const location = useLocation();
   const [status, setStatus] = useState('');
-
-  
+  const [userType, setUserType] = useState("new");  
 
   useEffect(() => {
     if (location.state?.formData) { 
@@ -22,6 +21,9 @@ function AdmissionForm() {
       if(saveData){
         setFormData(JSON.parse(saveData))
       }
+    }
+    if (location.state?.userType) {
+      setUserType(location.state.userType);
     }
   }, [location.state]);
 
@@ -163,6 +165,27 @@ function AdmissionForm() {
                 </label>
               </div>
             </div>
+            {userType === "existing" && (
+              <div>
+                <label htmlFor="rollNo">University Roll Number<span style={{ color: 'red' }}>*</span></label>
+                <input
+                  type="text"
+                  name="rollNo"
+                  id="rollNo"
+                  value={formData.rollNo}
+                  maxLength={12}
+                  title="Enter your University Roll number"
+                  inputMode="numeric"
+                  onInput={(e) => {
+                  e.target.value = e.target.value.replace(/\D/g, '');
+                   }}
+                  placeholder="University Roll Number"
+                  pattern="\d{12}"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -569,7 +592,7 @@ function AdmissionForm() {
                 const isRequired = (i=== 1 || i === 2 || (i===3 && formData.Course==='LLB'));
                 return (
                   <tr key={i}>
-                    <td>{i}</td>
+                    <td>{i}{isRequired && <span style={{ color: 'red' }}>*</span>}</td>
                     <td>
                       <input
                         name={`course${i}`}
@@ -695,7 +718,8 @@ function AdmissionForm() {
                 onChange={(e) => handleFileChange(e, 7)}
               />
             </div>
-
+          </div>
+          <div className="row">
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Caste Certificate:</label>
               <small>Max size: 100 KB</small>
@@ -708,14 +732,15 @@ function AdmissionForm() {
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
-              <label>Upload Aadhar Card:</label>
+              <label>Upload Aadhar Card:<span style={{ color: 'red' }}>*</span></label>
               <small>Max size: 100 KB</small>
               <input
                 type="file"
                 name="aadharCard"
                 accept="image/*"
                 title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
-                onChange={(e) => handleFileChange(e, 8)}
+                onChange={(e) => handleFileChange(e, 9)}
+                required
               />
             </div>
           </div>
