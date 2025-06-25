@@ -584,7 +584,7 @@ function AdmissionForm() {
                 <th>Maximum Marks</th>
                 <th>Percentage</th>
                 <th>Final Year Marksheet Serial. No.</th>
-                <th>Upload Marksheet <small style={{ color: 'gray' }}>Max size: 100KB. Allowed: .jpg, .jpeg, .png</small></th>
+                <th>Upload Marksheet <small style={{ color: 'gray' }}>Max size: 500KB. Allowed: .jpg, .jpeg, .png</small></th>
               </tr>
             </thead>
             <tbody>
@@ -681,7 +681,7 @@ function AdmissionForm() {
                         name={`marksheet${i}`}
                         accept=".pdf, .jpg, .jpeg, .png"
                         onChange={(e)=> handleFileChange(e,i)}
-                        title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
+                        title="Max 500KB. Allowed: .pdf, .jpg, .jpeg, .png"
                         required={isRequired}/>
                         
                     </td>
@@ -695,12 +695,12 @@ function AdmissionForm() {
           <div className="row">
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Photo:<span style={{ color: 'red' }}>*</span></label>
-              <small>Max size: 50 KB</small>
+              <small>Max size: 500 KB</small>
               <input
                 type="file"
                 name="photo"
-                accept="image/*"
-                title="Max 50KB. Allowed: .jpg, .jpeg, .png"
+                accept=".jpg, .jpeg"
+                title="Max 500KB. Allowed: .jpg, .jpeg, .png"
                 required
                 onChange={(e) => handleFileChange(e, 6)}
               />
@@ -708,12 +708,12 @@ function AdmissionForm() {
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Signature:<span style={{ color: 'red' }}>*</span></label>
-              <small>Max size: 50 KB</small>
+              <small>Max size: 500 KB</small>
               <input
                 type="file"
                 name="signature"
-                accept="image/*"
-                title="Max 50KB. Allowed: .jpg, .jpeg, .png"
+                accept=".jpg, .jpeg"
+                title="Max 500KB. Allowed: .jpg, .jpeg, .png"
                 required
                 onChange={(e) => handleFileChange(e, 7)}
               />
@@ -722,23 +722,23 @@ function AdmissionForm() {
           <div className="row">
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Caste Certificate:</label>
-              <small>Max size: 100 KB</small>
+              <small>Max size: 500 KB</small>
               <input
                 type="file"
                 name="casteCertificate"
                 accept="image/*"
-                title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
+                title="Max 500KB. Allowed: .pdf, .jpg, .jpeg, .png"
                 onChange={(e) => handleFileChange(e, 8)}
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '8px' }}>
               <label>Upload Aadhar Card:<span style={{ color: 'red' }}>*</span></label>
-              <small>Max size: 100 KB</small>
+              <small>Max size: 500 KB</small>
               <input
                 type="file"
                 name="aadharCard"
                 accept="image/*"
-                title="Max 100KB. Allowed: .pdf, .jpg, .jpeg, .png"
+                title="Max 500KB. Allowed: .pdf, .jpg, .jpeg, .png"
                 onChange={(e) => handleFileChange(e, 9)}
                 required
               />

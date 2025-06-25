@@ -84,6 +84,7 @@ const PreviewPage = () => {
 
       setStatus('Submitted successfully!');
       console.log('Form submitted successfully');
+      localStorage.setItem("successData", JSON.stringify({ studentId, candidateName, Course, Session }));
       navigate("/success", {state: { studentId, candidateName, Course, Session }});
       localStorage.removeItem("formData");
 
@@ -99,7 +100,7 @@ const PreviewPage = () => {
     <div>
       <h2>Preview Your Submission</h2>
       <form>
-        <div className="section">
+        <div className="button-row">
             <h3>Uploaded Photo</h3>
             {files.photo ? (
             <img
@@ -110,8 +111,6 @@ const PreviewPage = () => {
             ) : (
             <div className="readonly-field">No photo uploaded</div>
             )}
-        </div>
-        <div className="form-section">
             <h3>Uploaded Signature</h3>
             {files.signature ? (
             <img

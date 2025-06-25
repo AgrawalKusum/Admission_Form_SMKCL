@@ -1,0 +1,116 @@
+/* 1. Outer container */
+.page-background {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+}
+
+/* 2. Card wrapping both sides */
+.full-card {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* 3. Left side with image and text */
+.card-left {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-image: url('../public/backdrop.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #333;
+  position: relative;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.card-instructions {
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+/* 4. Right side content */
+.card-right {
+  width: 60%;
+  padding: 40px 20px;
+  background-color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* 5. Buttons */
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.button-group button {
+  padding: 12px 24px;
+  background-color: goldenrod;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.button-group button:hover {
+  background-color: darkgoldenrod;
+}
+
+/* 6. Responsive */
+@media (max-width: 768px) {
+  .full-card {
+    flex-direction: column;
+  }
+
+  .card-left,
+  .card-right {
+    width: 100%;
+  }
+
+  .card-image {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+
+h1 {
+  text-align: center;
+  color: #660202;
+  font-family: 'Bookman Old Style', Times, serif;
+  font-size: 2.4rem;
+  margin-bottom: 2px;
+}
+
+h2, h4{
+  margin-top: 0px;
+  text-align: center;
+  font-weight: bold;
+}
+p,li{
+    font-size:1.5rem;
+}
