@@ -1,10 +1,10 @@
 /* 1. Outer container */
 .page-background {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 0px;
+  padding: 0%;
 }
 
 /* 2. Card wrapping both sides */
@@ -12,11 +12,11 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  box-shadow: 0 1.5% 4.5% rgba(0, 0, 0, 0.15);
   overflow: hidden;
   width: 100%;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -28,7 +28,7 @@
   background-image: url('../public/backdrop.jpg');
   background-size: cover;
   background-position: center;
-  padding: 40px 20px; /* More horizontal space */
+  padding: 4% 1%;
   box-sizing: border-box;
 }
 
@@ -41,8 +41,8 @@
 
 .card-instructions {
   background-color: rgba(255, 255, 255, 0.85);
-  padding: 24px;
-  border-radius: 8px;
+  padding: 2.5%;
+  border-radius: 0.6rem;
   max-width: 93%; /* Fixed max width instead of 95% */
   width: 100%;
   margin: 0 auto;
@@ -52,33 +52,33 @@
 /* 4. Right side content */
 .card-right {
   width: 100%;
-  padding: 40px 20px;
+  padding: 4% 1%;
   background-color: white;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0px;
-  margin-bottom: -40px;
-  margin-top: -30px;
+  gap: 0%;
+  margin-bottom: -4%;
+  margin-top: -3%;
 }
 
 /* 5. Buttons */
 .button-group {
   display: flex;
-  gap: 16px;
+  gap: 1.6%;
   justify-content: center;
 }
 
 .button-group button {
-  padding: 12px 24px;
+  padding: 1.5% 2.5%;
   background-color: goldenrod;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  font-size: 16px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+  font-size: 1 rem;
+  box-shadow: 0% 3% 5% rgba(0, 0, 0, 0.1);
 }
 
 .button-group button:hover {
@@ -99,18 +99,43 @@
     object-fit: cover;
   }
 }
+@media (max-width: 480px) {
+  .card-left,
+  .card-right {
+    width: 100%;
+  }
 
+  .card-image {
+    height: 150px;
+    object-fit: cover;
+  }
+
+  p, li {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 1024px) {
+  .card-left,
+  .card-right {
+    width: 100%;
+  }
+
+  .card-image {
+    height: 250px;
+    object-fit: cover;
+  }
+}
 
 h1 {
   text-align: center;
   color: #660202;
   font-family: 'Bookman Old Style', Times, serif;
   font-size: 2.4rem;
-  margin-bottom: 2px;
+  margin-bottom: 2rem;
 }
 
 h2, h4{
-  margin-top: 0px;
+  margin-top: 0%;
   text-align: center;
   font-weight: bold;
 }
