@@ -31,7 +31,6 @@ const LandingPage = () => {
                 <li>Caste Certificate (if applicable) (.pdf/,jpg/.jpeg/.png, Max 500KB)</li>
                 <li>Aadhar Card(.pdf/jpg/jpeg/.png, Max 500KB each)</li>
                 </ul>
-                <p><b>NOTE:</b> All fields marked with <span style="color: red;">*</span> are compulsory. You will not be able to proceed to the next page without filling in those fields.</p>
                 <p>Ensure all documents are clearly scanned and meet the file format & size limits.</p>
 
                 <div className="button-group">
