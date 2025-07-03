@@ -23,6 +23,7 @@ const LandingPage = () => {
             <div className="card-left">
                 <div className="card-instructions">
                 <p>Please read the instructions carefully before starting the admission form.</p>
+                
                 <h3>Required Documents:</h3>
                 <ul>
                 <li>Passport-size Photograph (.jpg/.jpeg/.png, Max 500KB)</li>
