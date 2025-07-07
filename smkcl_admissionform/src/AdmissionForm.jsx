@@ -760,7 +760,7 @@ function AdmissionForm() {
             type="text"
             name="Remarks"
             value={formData.Remarks}
-            pattern="[A-Za-z\s]+"
+            pattern="[A-Za-z0-9]+"
             title="Only letters and spaces allowed"
             onInput={(e) => {
               e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
