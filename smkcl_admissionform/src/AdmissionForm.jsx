@@ -763,7 +763,7 @@ function AdmissionForm() {
             pattern="[A-Za-z0-9]+"
             title="Only letters and spaces allowed"
             onInput={(e) => {
-              e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
+              e.target.value = e.target.value.replace(/[^A-Za-z0-9\s]/g, '');
             }}
           />
         </div>
