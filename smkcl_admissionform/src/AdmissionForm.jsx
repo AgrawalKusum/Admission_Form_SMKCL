@@ -625,7 +625,7 @@ function AdmissionForm() {
                         placeholder='YYYY'
                         pattern="\d{4}"
                         name={`yearOfPassing${i}`}
-                        type="number"
+                        type="text"
                         value={formData[`yearOfPassing${i}`]}
                         inputMode="numeric"
                         onInput={(e) => {
@@ -669,10 +669,18 @@ function AdmissionForm() {
                     </td>
                     <td>
                       <input
+                        type="text"
                         name={`finalYearMarksheet_Sr_No${i}`}
                         value={formData[`finalYearMarksheet_Sr_No${i}`]}
                         onChange={handleChange}
                         required={isRequired}
+                        pattern="[A-Za-z0-9]+"
+                        onInput={(e) => {
+                          const cleaned = e.target.value.replace(/[^A-Za-z0-9]/g, '');
+                          if (e.target.value !== cleaned) {
+                            e.target.value = cleaned;
+                          }
+                        }}
                       />
                     </td>
                     <td>
